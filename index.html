@@ -19,6 +19,14 @@
 <!-- فاوآیکون: موج صدا -->
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231B5E56'/%3E%3Cg stroke='%23fff' stroke-width='2.4' stroke-linecap='round'%3E%3Cpath d='M7 14v4M11.5 10.5v11M16 7v18M20.5 11v10M25 14v4'/%3E%3C/g%3E%3C/svg%3E">
 
+<!-- ====== PWA: نصب به‌صورت اپ روی گوشی ====== -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="dr.talk">
+<link rel="manifest" href='data:application/manifest+json,%7B%22name%22%3A%22%DA%A9%D9%84%DB%8C%D9%86%DB%8C%DA%A9%20dr.talk%22%2C%22short_name%22%3A%22dr.talk%22%2C%22description%22%3A%22%DA%A9%D9%84%DB%8C%D9%86%DB%8C%DA%A9%20%DA%AF%D9%81%D8%AA%D8%A7%D8%B1%D8%AF%D8%B1%D9%85%D8%A7%D9%86%DB%8C%20%DB%8C%D8%B2%D8%AF%22%2C%22start_url%22%3A%22https%3A%2F%2Fhosseinmalleki5358-dotcom.github.io%2FDr.talk.clinic%2F%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23FAF6EF%22%2C%22theme_color%22%3A%22%231B5E56%22%2C%22lang%22%3A%22fa%22%2C%22dir%22%3A%22rtl%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%2C%253Csvg%2520xmlns%253D%2527http%253A%252F%252Fwww.w3.org%252F2000%252Fsvg%2527%2520viewBox%253D%25270%25200%2520512%2520512%2527%253E%253Crect%2520width%253D%2527512%2527%2520height%253D%2527512%2527%2520rx%253D%2527112%2527%2520fill%253D%2527%25231B5E56%2527%252F%253E%253Cg%2520stroke%253D%2527%2523fff%2527%2520stroke-width%253D%252736%2527%2520stroke-linecap%253D%2527round%2527%253E%253Cpath%2520d%253D%2527M112%2520224v64M192%2520168v176M256%2520112v288M320%2520176v160M400%2520224v64%2527%252F%253E%253C%252Fg%253E%253C%252Fsvg%253E%22%2C%22sizes%22%3A%22any%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%2C%22purpose%22%3A%22any%20maskable%22%7D%5D%7D'>
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='112' fill='%231B5E56'/%3E%3Cg stroke='%23fff' stroke-width='36' stroke-linecap='round'%3E%3Cpath d='M112 224v64M192 168v176M256 112v288M320 176v160M400 224v64'/%3E%3C/g%3E%3C/svg%3E">
+
 <!-- داده‌ی ساختاریافته برای سئوی محلی -->
 <script type="application/ld+json">
 {
@@ -339,7 +347,6 @@ section{padding-block:var(--s9)}
   outline:none;border-color:var(--jade);background:var(--white);
 }
 .form-field .error-msg{font-size:.78rem;color:#B4472E;display:none}
-.form-field.invalid input,.form-field.invalid select{border-color:#B4472E}
 .form-field.invalid .error-msg{display:block}
 .form-submit{grid-column:1/-1;margin-top:var(--s4)}
 .form-success{
@@ -348,6 +355,63 @@ section{padding-block:var(--s9)}
   text-align:center;font-weight:500;color:var(--jade-deep);
 }
 .form-success.show{display:block}
+.form-error{
+  display:none;grid-column:1/-1;background:#FBEDE8;
+  border:1.5px solid #B4472E;border-radius:16px;padding:var(--s4);
+  text-align:center;font-size:.9rem;color:#B4472E;
+}
+.form-error.show{display:block}
+
+/* ====== CALENDAR (تقویم رزرو شمسی) ====== */
+.calendar-wrap{grid-column:1/-1}
+.calendar-wrap.invalid .cal-box{border-color:#B4472E}
+.calendar-wrap.invalid .error-msg{display:block}
+.cal-box{
+  border:1.5px solid var(--line);border-radius:18px;background:var(--cream);
+  padding:var(--s4);transition:border-color .3s;
+}
+.cal-head{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:var(--s2) var(--s1) var(--s4);
+}
+.cal-title{font-weight:800;font-size:1rem;color:var(--jade)}
+.cal-nav{
+  width:38px;height:38px;border-radius:12px;border:1.5px solid var(--line);
+  background:var(--white);display:grid;place-items:center;transition:all .3s var(--ease);
+}
+.cal-nav:hover:not(:disabled){border-color:var(--jade);color:var(--jade)}
+.cal-nav:disabled{opacity:.3;cursor:not-allowed}
+.cal-nav svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.4;stroke-linecap:round}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.cal-dow{
+  text-align:center;font-size:.75rem;font-weight:700;color:var(--ink-soft);
+  padding-block:var(--s1);
+}
+.cal-day{
+  aspect-ratio:1;border:none;background:transparent;border-radius:12px;
+  font-family:inherit;font-size:.9rem;font-weight:500;color:var(--ink);
+  display:grid;place-items:center;transition:all .2s var(--ease);
+}
+.cal-day:hover:not(:disabled):not(.selected){background:var(--jade-tint);color:var(--jade)}
+.cal-day:disabled{color:#C4BDB0;cursor:not-allowed;text-decoration:line-through;text-decoration-thickness:1px}
+.cal-day.is-friday{color:#D09A8A}
+.cal-day:disabled.is-friday{color:#E4C9BF}
+.cal-day.is-today:not(:disabled):not(.selected){box-shadow:inset 0 0 0 1.5px var(--gold);font-weight:700}
+.cal-day.selected{background:var(--jade);color:var(--white);font-weight:800}
+.cal-hint{font-size:.78rem;color:var(--ink-soft);padding:var(--s3) var(--s1) 0}
+
+/* time chips */
+.time-chips{display:flex;gap:var(--s2);flex-wrap:wrap;margin-top:var(--s2)}
+.chip{
+  border:1.5px solid var(--line);background:var(--cream);border-radius:var(--r-pill);
+  padding:var(--s2) var(--s5);font-family:inherit;font-size:.9rem;font-weight:600;
+  color:var(--ink);transition:all .25s var(--ease);
+}
+.chip:hover:not(:disabled){border-color:var(--jade);color:var(--jade)}
+.chip.selected{background:var(--jade);border-color:var(--jade);color:var(--white)}
+.chip:disabled{opacity:.35;cursor:not-allowed;text-decoration:line-through}
+.time-wrap.invalid .error-msg{display:block}
+.time-empty{font-size:.85rem;color:var(--ink-soft);padding-block:var(--s2)}
 
 /* testimonials */
 .testimonials-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:var(--s5)}
@@ -374,9 +438,7 @@ section{padding-block:var(--s9)}
 .faq-q:hover{color:var(--jade)}
 .faq-q .chev{transition:transform .3s var(--ease);flex-shrink:0}
 .faq-item.open .chev{transform:rotate(180deg)}
-.faq-a{
-  max-height:0;overflow:hidden;transition:max-height .4s var(--ease);
-}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .4s var(--ease)}
 .faq-a p{padding:0 var(--s5) var(--s5);font-size:.92rem;color:var(--ink-soft)}
 
 /* contact + footer */
@@ -403,6 +465,68 @@ footer nav a:hover{opacity:1}
 .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
 .reveal.visible{opacity:1;transform:none}
 
+/* ====== مودال راهنمای نصب اپ ====== */
+.pwa-overlay{
+  position:fixed;inset:0;z-index:1000;
+  background:rgba(18,68,61,.45);backdrop-filter:blur(6px);
+  display:none;align-items:center;justify-content:center;
+  padding:var(--s5);
+}
+.pwa-overlay.show{display:flex;animation:fadeIn .35s var(--ease)}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.pwa-modal{
+  background:var(--white);border-radius:var(--r-card);
+  max-width:420px;width:100%;max-height:88vh;overflow-y:auto;
+  padding:var(--s7) var(--s6) var(--s6);
+  text-align:center;position:relative;
+  animation:slideUp .4s var(--ease);
+  box-shadow:0 24px 64px rgba(18,68,61,.3);
+}
+@keyframes slideUp{from{transform:translateY(32px);opacity:0}to{transform:none;opacity:1}}
+.pwa-modal__close{
+  position:absolute;top:var(--s4);left:var(--s4);
+  width:36px;height:36px;border-radius:50%;border:none;
+  background:var(--cream);color:var(--ink-soft);
+  display:grid;place-items:center;transition:all .3s var(--ease);
+}
+.pwa-modal__close:hover{background:var(--jade-tint);color:var(--jade)}
+.pwa-modal__icon{
+  width:76px;height:76px;border-radius:22px;background:var(--jade);
+  display:grid;place-items:center;margin:0 auto var(--s4);
+  box-shadow:0 8px 24px rgba(27,94,86,.3);
+}
+.pwa-modal__icon svg{width:40px;height:40px;stroke:var(--white);fill:none;stroke-width:3;stroke-linecap:round}
+.pwa-modal h3{font-size:1.25rem;font-weight:800;margin-bottom:var(--s2)}
+.pwa-modal .pwa-sub{font-size:.88rem;color:var(--ink-soft);margin-bottom:var(--s5)}
+.pwa-steps{text-align:start;margin-bottom:var(--s6)}
+.pwa-step{
+  display:flex;gap:var(--s3);align-items:flex-start;
+  padding-block:var(--s3);
+}
+.pwa-step + .pwa-step{border-top:1px dashed var(--line)}
+.pwa-step__num{
+  width:28px;height:28px;border-radius:50%;background:var(--jade-tint);
+  color:var(--jade);font-weight:800;font-size:.85rem;
+  display:grid;place-items:center;flex-shrink:0;margin-top:3px;
+}
+.pwa-step p{font-size:.92rem}
+.pwa-step p strong{color:var(--jade)}
+.pwa-step small{display:block;font-size:.78rem;color:var(--ink-soft)}
+.pwa-modal .btn{width:100%;justify-content:center}
+.pwa-later{
+  background:none;border:none;margin-top:var(--s3);
+  font-size:.82rem;color:var(--ink-soft);text-decoration:underline;
+  text-underline-offset:4px;
+}
+.pwa-later:hover{color:var(--jade)}
+.pwa-note{
+  margin-top:var(--s4);font-size:.75rem;color:var(--ink-soft);
+  background:var(--cream);border-radius:12px;padding:var(--s2) var(--s3);
+}
+@media (max-width:480px){
+  .pwa-modal{padding:var(--s6) var(--s5) var(--s5)}
+}
+
 /* ====== RESPONSIVE ====== */
 @media (max-width:1024px){
   .hero-grid,.about-grid{grid-template-columns:1fr}
@@ -419,10 +543,29 @@ footer nav a:hover{opacity:1}
   .form-grid{grid-template-columns:1fr}
   .booking-form,.working-hours{padding:var(--s5) var(--s4)}
   .hero-stats{gap:var(--s6)}
+  .cal-day{font-size:.82rem}
 }
 </style>
 </head>
 <body>
+
+<!-- ====== مودال راهنمای نصب اپ ====== -->
+<div class="pwa-overlay" id="pwaOverlay" role="dialog" aria-modal="true" aria-labelledby="pwaTitle">
+  <div class="pwa-modal">
+    <button class="pwa-modal__close" id="pwaClose" aria-label="بستن">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+    <div class="pwa-modal__icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><path d="M4 10v4M8 7v10M12 4v16M16 8v8M20 11v2"/></svg>
+    </div>
+    <h3 id="pwaTitle">dr.talk را روی گوشی نصب کنید</h3>
+    <p class="pwa-sub" id="pwaSub">وب‌اپ کلینیک dr.talk — بدون نیاز به نصب از فروشگاه</p>
+    <div class="pwa-steps" id="pwaSteps"><!-- مراحل با جاوااسکریپت بر اساس سیستم‌عامل پر می‌شود --></div>
+    <button class="btn btn-primary" id="pwaGotIt">متوجه شدم ✓</button>
+    <button class="pwa-later" id="pwaLater">بعداً یادآوری کن</button>
+    <p class="pwa-note" id="pwaNote">این پیام فقط بار اول نمایش داده می‌شود.</p>
+  </div>
+</div>
 
 <!-- ====== HEADER ====== -->
 <header>
@@ -670,7 +813,7 @@ footer nav a:hover{opacity:1}
     <div class="section-head reveal">
       <span class="eyebrow">نوبت‌دهی</span>
       <h2>نوبت خود را رزرو کنید</h2>
-      <p class="lead">فرم را تکمیل کنید؛ برای هماهنگی نهایی نوبت با شما تماس می‌گیریم.</p>
+      <p class="lead">از تقویم، روز دلخواه‌تان را انتخاب کنید؛ برای هماهنگی نهایی نوبت با شما تماس می‌گیریم.</p>
     </div>
     <div class="booking-grid">
       <aside class="working-hours reveal">
@@ -695,7 +838,7 @@ footer nav a:hover{opacity:1}
             <input type="tel" id="phone" name="phone" required inputmode="tel" placeholder="۰۹۱۲۳۴۵۶۷۸۹" style="direction:ltr;text-align:right">
             <span class="error-msg">لطفاً شماره موبایل معتبر (۱۱ رقم، با ۰۹) وارد کنید.</span>
           </div>
-          <div class="form-field">
+          <div class="form-field form-field--full">
             <label for="serviceType">نوع خدمت *</label>
             <select id="serviceType" name="serviceType" required>
               <option value="">انتخاب کنید…</option>
@@ -711,24 +854,35 @@ footer nav a:hover{opacity:1}
             </select>
             <span class="error-msg">لطفاً نوع خدمت را انتخاب کنید.</span>
           </div>
-          <div class="form-field">
-            <label for="dayPref">روز دلخواه (شنبه تا چهارشنبه) *</label>
-            <select id="dayPref" name="dayPref" required>
-              <option value="">انتخاب کنید…</option>
-              <option>شنبه</option><option>یک‌شنبه</option><option>دوشنبه</option>
-              <option>سه‌شنبه</option><option>چهارشنبه</option>
-            </select>
-            <span class="error-msg">لطفاً روز را انتخاب کنید.</span>
+
+          <!-- ====== تقویم انتخاب روز ====== -->
+          <div class="form-field--full calendar-wrap" id="calendarWrap">
+            <label>انتخاب روز (تقویم شمسی) *</label>
+            <div class="cal-box">
+              <div class="cal-head">
+                <button type="button" class="cal-nav" id="calPrev" aria-label="ماه قبل">
+                  <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+                </button>
+                <span class="cal-title" id="calTitle"></span>
+                <button type="button" class="cal-nav" id="calNext" aria-label="ماه بعد">
+                  <svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg>
+                </button>
+              </div>
+              <div class="cal-grid" id="calGrid"></div>
+              <p class="cal-hint">روزهای پنج‌شنبه، جمعه و روزهای گذشته قابل انتخاب نیستند.</p>
+            </div>
+            <span class="error-msg">لطفاً از تقویم، روز نوبت را انتخاب کنید.</span>
           </div>
-          <div class="form-field form-field--full">
-            <label for="timePref">بازه‌ی ساعتی دلخواه (۱۷ تا ۲۱) *</label>
-            <select id="timePref" name="timePref" required>
-              <option value="">انتخاب کنید…</option>
-              <option>۱۷ تا ۱۸</option><option>۱۸ تا ۱۹</option>
-              <option>۱۹ تا ۲۰</option><option>۲۰ تا ۲۱</option>
-            </select>
+
+          <!-- ====== انتخاب بازه‌ی ساعتی ====== -->
+          <div class="form-field--full time-wrap" id="timeWrap">
+            <label>بازه‌ی ساعتی (۱۷ تا ۲۱) *</label>
+            <div class="time-chips" id="timeChips">
+              <span class="time-empty">ابتدا از تقویم، روز نوبت را انتخاب کنید.</span>
+            </div>
             <span class="error-msg">لطفاً بازه‌ی ساعتی را انتخاب کنید.</span>
           </div>
+
           <div class="form-field form-field--full">
             <label for="notes">توضیح کوتاه درباره‌ی مشکل (اختیاری)</label>
             <textarea id="notes" name="notes" placeholder="مثلاً: فرزند ۵ ساله‌ام در تلفظ حرف «ر» مشکل دارد."></textarea>
@@ -736,8 +890,11 @@ footer nav a:hover{opacity:1}
           <div class="form-success" id="formSuccess">
             ✅ درخواست شما ثبت شد. برای هماهنگی نهایی نوبت، به‌زودی با شما تماس می‌گیریم.
           </div>
+          <div class="form-error" id="formError">
+            ⚠️ ارسال درخواست با مشکل مواجه شد. لطفاً دوباره تلاش کنید یا با شماره‌ی کلینیک تماس بگیرید.
+          </div>
           <div class="form-submit">
-            <button type="submit" class="btn btn-primary" style="width:100%">ثبت درخواست نوبت</button>
+            <button type="submit" class="btn btn-primary" id="submitBtn" style="width:100%">ثبت درخواست نوبت</button>
           </div>
         </div>
       </form>
@@ -792,6 +949,12 @@ footer nav a:hover{opacity:1}
           <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
         </button>
         <div class="faq-a"><p>طول و تعداد جلسات به نوع و شدت اختلال بستگی دارد. پس از ارزیابی اولیه، برآورد دقیق و واقع‌بینانه‌ای از مسیر درمان به شما ارائه می‌شود.</p></div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q" aria-expanded="false">چطور سایت را به‌صورت اپ روی گوشی نصب کنم؟
+          <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="faq-a"><p>در <strong>اندروید</strong>: سایت را با کروم باز کنید، از منوی سه‌نقطه گزینه‌ی «Add to Home screen / افزودن به صفحه اصلی» را بزنید. در <strong>آیفون</strong>: سایت را با سافاری باز کنید، دکمه‌ی Share (مربع با فلش) را بزنید و «Add to Home Screen» را انتخاب کنید. پس از آن آیکون dr.talk روی صفحه‌ی گوشی شما قرار می‌گیرد و مثل یک اپ تمام‌صفحه باز می‌شود.</p></div>
       </div>
       <div class="faq-item reveal">
         <button class="faq-q" aria-expanded="false">آیا لکنت کودکم با گذر زمان خودبه‌خود خوب می‌شود؟
@@ -871,9 +1034,26 @@ footer nav a:hover{opacity:1}
 </footer>
 
 <script>
+/* =========================================================
+   اتصال ایمیل — Web3Forms (کلید فعال)
+   ========================================================= */
+const WEB3FORMS_KEY = "2c9768e6-12a7-43e5-ba6a-f2e7cb74c754";
+
+/* ====== Service Worker: حالت آفلاین اپ ======
+   فایل sw.js باید کنار index.html در ریپازیتوری آپلود شده باشد.
+   اگر موجود نباشد، سایت بدون آفلاین به‌درستی کار می‌کند. */
+if ('serviceWorker' in navigator &&
+    (location.protocol === 'https:' || location.hostname === 'localhost')) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
 
-  /* ===== portrait fallback: if image missing, show placeholder ===== */
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ===== portrait fallback ===== */
   document.querySelectorAll('.portrait img, .about-portrait img').forEach(img => {
     img.addEventListener('error', () => {
       const box = img.parentElement;
@@ -900,8 +1080,7 @@ document.addEventListener('DOMContentLoaded', () => {
     hamburger.setAttribute('aria-expanded', 'false');
   }));
 
-  /* ===== scroll reveal (respects reduced motion) ===== */
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  /* ===== scroll reveal ===== */
   const reveals = document.querySelectorAll('.reveal');
   if (reduced || !('IntersectionObserver' in window)) {
     reveals.forEach(el => el.classList.add('visible'));
@@ -925,10 +1104,262 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  /* ===== booking form validation (mock submit) ===== */
+  /* =========================================================
+     مودال راهنمای نصب اپ — فقط بار اول، فقط روی موبایل
+     ========================================================= */
+  const pwaOverlay = document.getElementById('pwaOverlay');
+  const pwaSteps = document.getElementById('pwaSteps');
+  const pwaSub = document.getElementById('pwaSub');
+  const pwaNote = document.getElementById('pwaNote');
+  const ua = navigator.userAgent || '';
+  const isIOS = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  const isAndroid = /Android/.test(ua);
+  const isMobile = isIOS || isAndroid;
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches ||
+                       window.navigator.standalone === true;
+
+  function fillPwaSteps() {
+    if (isIOS) {
+      document.getElementById('pwaTitle').textContent = 'نصب اپلیکیشن dr.talk — آیفون / آیپد';
+      pwaSub.textContent = 'در مرورگر Safari این سه مرحله را انجام دهید:';
+      pwaSteps.innerHTML = `
+        <div class="pwa-step">
+          <span class="pwa-step__num">۱</span>
+          <p><strong>روی دکمه‌ی اشتراک‌گذاری بزنید</strong><small>آیکون مربع با فلش رو‌به‌بالا، در نوار پایین یا بالای Safari</small></p>
+        </div>
+        <div class="pwa-step">
+          <span class="pwa-step__num">۲</span>
+          <p><strong>«Add to Home Screen» را بزنید</strong><small>همان «افزودن به صفحه‌ی اصلی» — کمی پایین‌تر در فهرست</small></p>
+        </div>
+        <div class="pwa-step">
+          <span class="pwa-step__num">۳</span>
+          <p><strong>روی «Add / افزودن» بزنید</strong><small>آیکون dr.talk روی صفحه‌ی اصلی اضافه می‌شود</small></p>
+        </div>`;
+    } else if (isAndroid) {
+      document.getElementById('pwaTitle').textContent = 'نصب اپلیکیشن dr.talk — اندروید';
+      pwaSub.textContent = 'در مرورگر Chrome این سه مرحله را انجام دهید:';
+      pwaSteps.innerHTML = `
+        <div class="pwa-step">
+          <span class="pwa-step__num">۱</span>
+          <p><strong>روی منوی سه‌نقطه بزنید</strong><small>⋮ در گوشه‌ی بالای مرورگر کروم</small></p>
+        </div>
+        <div class="pwa-step">
+          <span class="pwa-step__num">۲</span>
+          <p><strong>«افزودن به صفحه‌ی اصلی» را بزنید</strong><small>Add to Home screen</small></p>
+        </div>
+        <div class="pwa-step">
+          <span class="pwa-step__num">۳</span>
+          <p><strong>روی «افزودن / نصب» تأیید کنید</strong><small>آیکون dr.talk روی صفحه‌ی اصلی اضافه می‌شود</small></p>
+        </div>`;
+    }
+  }
+
+  function closePwa(permanent) {
+    pwaOverlay.classList.remove('show');
+    document.body.style.overflow = '';
+    if (permanent) {
+      try { localStorage.setItem('drtalk_pwa_guide_seen', '1'); } catch (e) {}
+    }
+  }
+
+  if (isMobile && !isStandalone) {
+    let seen = false;
+    try { seen = localStorage.getItem('drtalk_pwa_guide_seen') === '1'; } catch (e) {}
+    if (!seen) {
+      fillPwaSteps();
+      setTimeout(() => {
+        pwaOverlay.classList.add('show');
+        document.body.style.overflow = 'hidden';
+      }, 1200);
+    }
+  } else {
+    pwaNote.textContent = 'نصب اپ فقط از طریق گوشی (کروم اندروید یا سافاری آیفون) امکان‌پذیر است.';
+  }
+
+  document.getElementById('pwaGotIt').addEventListener('click', () => closePwa(true));
+  document.getElementById('pwaClose').addEventListener('click', () => closePwa(true));
+  document.getElementById('pwaLater').addEventListener('click', () => closePwa(false));
+  pwaOverlay.addEventListener('click', e => { if (e.target === pwaOverlay) closePwa(false); });
+
+  /* =========================================================
+     تبدیل تاریخ میلادی ↔ جلالی (الگوریتم استاندارد)
+     ========================================================= */
+  const div = (a, b) => ~~(a / b);
+  const mod = (a, b) => a - ~~(a / b) * b;
+
+  function g2d(gy, gm, gd) {
+    let d = div((gy + div(gm - 8, 6) + 100100) * 1461, 4)
+          + div(153 * mod(gm + 9, 12) + 2, 5)
+          + gd - 34840408;
+    d = d - div(div(gy + 100100 + div(gm - 8, 6), 100) * 3, 4) + 752;
+    return d;
+  }
+  function d2g(jdn) {
+    let j = 4 * jdn + 139361631;
+    j = j + div(div(4 * jdn + 183187720, 146097) * 3, 4) * 4 - 3908;
+    const i = div(mod(j, 1461), 4) * 5 + 308;
+    const gd = div(mod(i, 153), 5) + 1;
+    const gm = mod(div(i, 153), 12) + 1;
+    const gy = div(j, 1461) - 100100 + div(8 - gm, 6);
+    return { gy, gm, gd };
+  }
+  function jalCal(jy) {
+    const breaks = [-61,9,38,199,426,686,756,818,1111,1181,1210,1635,2060,2097,2192,2262,2324,2394,2456,3178];
+    const bl = breaks.length;
+    const gy = jy + 621;
+    let leapJ = -14, jp = breaks[0], jm, jump = 0, leap, leapG, march, n, i;
+    for (i = 1; i < bl; i += 1) {
+      jm = breaks[i]; jump = jm - jp;
+      if (jy < jm) break;
+      leapJ = leapJ + div(jump, 33) * 8 + div(mod(jump, 33), 4);
+      jp = jm;
+    }
+    n = jy - jp;
+    leapJ = leapJ + div(n, 33) * 8 + div(mod(n, 33) + 3, 4);
+    if (mod(jump, 33) === 4 && jump - n === 4) leapJ += 1;
+    leapG = div(gy, 4) - div((div(gy, 100) + 1) * 3, 4) - 150;
+    march = 20 + leapJ - leapG;
+    if (jump - n < 6) n = n - jump + div(jump + 4, 33) * 33;
+    leap = mod(mod(n + 1, 33) - 1, 4);
+    if (leap === -1) leap = 4;
+    return { leap, gy, march };
+  }
+  function d2j(jdn) {
+    const gy = d2g(jdn).gy;
+    let jy = gy - 621;
+    const r = jalCal(jy);
+    const jdn1f = g2d(gy, 3, r.march);
+    let k = jdn - jdn1f, jm, jd;
+    if (k >= 0) {
+      if (k <= 185) { jm = 1 + div(k, 31); jd = mod(k, 31) + 1; return { jy, jm, jd }; }
+      else k -= 186;
+    } else { jy -= 1; k += 179; if (r.leap === 1) k += 1; }
+    jm = 7 + div(k, 30); jd = mod(k, 30) + 1;
+    return { jy, jm, jd };
+  }
+  function j2d(jy, jm, jd) {
+    const r = jalCal(jy);
+    return g2d(r.gy, 3, r.march) + (jm - 1) * 31 - div(jm, 7) * (jm - 7) + jd - 1;
+  }
+  function jalMonthLength(jy, jm) {
+    if (jm <= 6) return 31;
+    if (jm <= 11) return 30;
+    return jalCal(jy).leap === 0 ? 30 : 29;
+  }
+
+  const J_MONTHS = ['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'];
+  const J_DOW = ['شنبه','یک‌شنبه','دوشنبه','سه‌شنبه','چهارشنبه','پنج‌شنبه','جمعه'];
+
+  /* ===== تقویم رزرو نوبت ===== */
+  const today = new Date();
+  const todayJ = d2j(g2d(today.getFullYear(), today.getMonth() + 1, today.getDate()));
+  let viewJy = todayJ.jy, viewJm = todayJ.jm;
+  const MAX_MONTHS_AHEAD = 2;
+  let selectedDay = null;
+  let selectedTime = null;
+
+  const calTitle = document.getElementById('calTitle');
+  const calGrid  = document.getElementById('calGrid');
+  const calPrev  = document.getElementById('calPrev');
+  const calNext  = document.getElementById('calNext');
+  const timeChips = document.getElementById('timeChips');
+  const calendarWrap = document.getElementById('calendarWrap');
+  const timeWrap = document.getElementById('timeWrap');
+
+  function monthOffset() {
+    return (viewJy - todayJ.jy) * 12 + (viewJm - todayJ.jm);
+  }
+
+  function renderCalendar() {
+    calTitle.textContent = J_MONTHS[viewJm - 1] + ' ' + viewJy.toLocaleString('fa-IR');
+    calPrev.disabled = monthOffset() <= 0;
+    calNext.disabled = monthOffset() >= MAX_MONTHS_AHEAD;
+
+    let html = J_DOW.map(d => `<span class="cal-dow">${d}</span>`).join('');
+
+    const firstG = d2g(j2d(viewJy, viewJm, 1));
+    const startCol = (new Date(firstG.gy, firstG.gm - 1, firstG.gd).getDay() + 1) % 7;
+
+    for (let i = 0; i < startCol; i++) html += '<span></span>';
+
+    const len = jalMonthLength(viewJy, viewJm);
+    for (let day = 1; day <= len; day++) {
+      const g = d2g(j2d(viewJy, viewJm, day));
+      const dow = new Date(g.gy, g.gm - 1, g.gd).getDay();
+      const dowIndex = (dow + 1) % 7;
+      const isPast = (viewJy < todayJ.jy) ||
+                     (viewJy === todayJ.jy && viewJm < todayJ.jm) ||
+                     (viewJy === todayJ.jy && viewJm === todayJ.jm && day < todayJ.jd);
+      const isFriday = dowIndex === 6;
+      const isThursday = dowIndex === 5;
+      const disabled = isPast || isThursday || isFriday;
+      const isToday = (viewJy === todayJ.jy && viewJm === todayJ.jm && day === todayJ.jd);
+      const isSelected = selectedDay && selectedDay.jy === viewJy && selectedDay.jm === viewJm && selectedDay.jd === day;
+      let cls = 'cal-day';
+      if (isFriday) cls += ' is-friday';
+      if (isToday) cls += ' is-today';
+      if (isSelected) cls += ' selected';
+      html += `<button type="button" class="${cls}" data-day="${day}" data-dow="${dowIndex}" ${disabled ? 'disabled' : ''}>${day.toLocaleString('fa-IR')}</button>`;
+    }
+    calGrid.innerHTML = html;
+
+    calGrid.querySelectorAll('.cal-day:not(:disabled)').forEach(btn => {
+      btn.addEventListener('click', () => {
+        calGrid.querySelectorAll('.cal-day').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        selectedDay = {
+          jy: viewJy, jm: viewJm, jd: +btn.dataset.day,
+          dowIndex: +btn.dataset.dow,
+          label: J_DOW[+btn.dataset.dow] + ' ' + (+btn.dataset.day).toLocaleString('fa-IR') + ' ' + J_MONTHS[viewJm - 1] + ' ' + viewJy.toLocaleString('fa-IR')
+        };
+        calendarWrap.classList.remove('invalid');
+        renderTimeChips();
+      });
+    });
+  }
+
+  function renderTimeChips() {
+    if (!selectedDay) {
+      timeChips.innerHTML = '<span class="time-empty">ابتدا از تقویم، روز نوبت را انتخاب کنید.</span>';
+      return;
+    }
+    const slots = ['۱۷ تا ۱۸', '۱۸ تا ۱۹', '۱۹ تا ۲۰', '۲۰ تا ۲۱'];
+    timeChips.innerHTML = slots.map(s =>
+      `<button type="button" class="chip" data-time="${s}">${s}</button>`
+    ).join('');
+    selectedTime = null;
+    timeWrap.classList.remove('invalid');
+    timeChips.querySelectorAll('.chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        timeChips.querySelectorAll('.chip').forEach(c => c.classList.remove('selected'));
+        chip.classList.add('selected');
+        selectedTime = chip.dataset.time;
+        timeWrap.classList.remove('invalid');
+      });
+    });
+  }
+
+  calPrev.addEventListener('click', () => {
+    if (monthOffset() > 0) {
+      viewJm--; if (viewJm < 1) { viewJm = 12; viewJy--; }
+      renderCalendar();
+    }
+  });
+  calNext.addEventListener('click', () => {
+    if (monthOffset() < MAX_MONTHS_AHEAD) {
+      viewJm++; if (viewJm > 12) { viewJm = 1; viewJy++; }
+      renderCalendar();
+    }
+  });
+  renderCalendar();
+
+  /* ===== ارسال فرم به Web3Forms ===== */
   const form = document.getElementById('bookingForm');
   const success = document.getElementById('formSuccess');
-  form.addEventListener('submit', e => {
+  const errorMsg = document.getElementById('formError');
+  const submitBtn = document.getElementById('submitBtn');
+
+  form.addEventListener('submit', async e => {
     e.preventDefault();
     let valid = true;
 
@@ -943,17 +1374,48 @@ document.addEventListener('DOMContentLoaded', () => {
     check('fullName', v => v.length >= 3);
     check('phone', v => /^0?9\d{9}$/.test(v.replace(/[\s-]/g, '')));
     check('serviceType', v => v !== '');
-    check('dayPref', v => v !== '');
-    check('timePref', v => v !== '');
 
-    if (valid) {
+    if (!selectedDay) { calendarWrap.classList.add('invalid'); valid = false; }
+    if (!selectedTime) { timeWrap.classList.add('invalid'); valid = false; }
+
+    if (!valid) return;
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'در حال ارسال…';
+    errorMsg.classList.remove('show');
+
+    const payload = {
+      access_key: WEB3FORMS_KEY,
+      subject: 'درخواست نوبت جدید — کلینیک dr.talk',
+      from_name: 'سایت کلینیک dr.talk',
+      'نام و نام خانوادگی': document.getElementById('fullName').value.trim(),
+      'شماره تماس': document.getElementById('phone').value.trim(),
+      'نوع خدمت': document.getElementById('serviceType').value,
+      'روز نوبت': selectedDay.label,
+      'بازه ساعتی': selectedTime,
+      'توضیحات': document.getElementById('notes').value.trim() || '—'
+    };
+
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      if (!data.success) throw new Error('send failed');
+
       success.classList.add('show');
       form.querySelector('.form-grid').style.display = 'none';
       success.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'center' });
+    } catch (err) {
+      errorMsg.classList.add('show');
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'ثبت درخواست نوبت';
     }
   });
 
-  /* ===== mock payment notice ===== */
+  /* ===== اعلان نمایشی پرداخت پکیج‌ها ===== */
   window.showPaymentNotice = function () {
     alert('پرداخت آنلاین به‌زودی فعال می‌شود. برای خرید پکیج فعلاً از طریق تلگرام کلینیک (t.me/Slpt94) پیام دهید.');
   };
